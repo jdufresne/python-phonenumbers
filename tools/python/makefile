@@ -96,17 +96,17 @@ TARBALL_LOCAL=dist/$(PACKAGE)-$(VERSION).tar.gz
 TARBALL=$(PYDIR)/$(TARBALL_LOCAL)
 # Build setuptools packaged tarball $(TARBALL)
 sdist: alldata
-	cd $(PYDIR) && $(PYTHON) setup.py sdist
+	cd $(TOPDIR) && $(PYTHON) setup.py sdist
 $(TARBALL): sdist
 
 install: alldata
-	cd $(PYDIR) && $(PYTHON) setup.py build
-	cd $(PYDIR) && sudo $(PYTHON) setup.py install
+	cd $(TOPDIR) && $(PYTHON) setup.py build
+	cd $(TOPDIR) && sudo $(PYTHON) setup.py install
 
 clean: coverage_clean profile_clean
 	rm -f *.pyc
 	rm -rf __pycache__
-	rm -f $(PYDIR)/MANIFEST $(PYDIR)/*.pyc
+	rm -f $(TOPDIR)/MANIFEST $(PYDIR)/*.pyc
 	rm -f $(PYDIR)/phonenumbers/*.pyc
 	rm -f $(PYDIR)/phonenumbers/data/*.pyc
 	rm -f $(PYDIR)/phonenumbers/shortdata/*.pyc
@@ -122,7 +122,7 @@ clean: coverage_clean profile_clean
 	rm -f $(PYDIR)/phonenumbers/*.py,cover $(PYDIR)/.coverage*
 	rm -f $(PYDIR)/tests/*.pyc $(PYDIR)/tests/testdata/*.pyc $(PYDIR)/tests/testgeodata/*.pyc $(PYDIR)/tests/testcarrierdata/*.pyc
 	rm -rf $(PYDIR)/tests/__pycache__ $(PYDIR)/tests/testdata/__pycache__ $(PYDIR)/tests/testgeodata/__pycache__ $(PYDIR)/tests/testcarrierdata/__pycache__
-	rm -rf $(PYDIR)/build $(PYDIR)/deb_dist $(PYDIR)/dist
+	rm -rf $(TOPDIR)/build $(TOPDIR)/deb_dist $(TOPDIR)/dist
 
 metaclean:
 	rm -rf $(PYDIR)/phonenumbers/data $(PYDIR)/phonenumbers/shortdata $(PYDIR)/tests/testdata
@@ -131,8 +131,8 @@ metaclean:
 	rm -rf $(PYDIR)/phonenumbers/tzdata $(PYDIR)/tests/testtzdata
 
 distclean: clean metaclean
-	rm -rf $(PYDIR)/$(PACKAGE).egg-info
-	rm -rf $(PYDIR)/build
+	rm -rf $(TOPDIR)/$(PACKAGE).egg-info
+	rm -rf $(TOPDIR)/build
 	rm -f $(PYDIR)/DumpLocale.class
 
 # Create Debian package.  Requires py2dsc, included in the python-stdeb package.
